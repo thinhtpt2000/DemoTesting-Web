@@ -5,13 +5,19 @@
  */
 package com.thinhdrit.demotesting.servlet;
 
+import com.thinhdrit.demotesting.users.UsersDAO;
+import com.thinhdrit.demotesting.users.UsersDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -19,6 +25,9 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "LoginServlet", urlPatterns = {"/login"})
 public class LoginServlet extends HttpServlet {
+    
+    private final String HOME_PAGE = "home.jsp";
+    private final String FAIL_PAGE = "login.jsp";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,12 +41,36 @@ public class LoginServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
+        
         PrintWriter out = response.getWriter();
-
+        
+        String email = request.getParameter("txtUsername");
+        String password = request.getParameter("txtPassword");
+        
+        String url = FAIL_PAGE;
+        String msg = null;
+        
         try {
-
+            if (email != null && password != null && email.trim().length() > 0 && password.trim().length() > 0) {
+                UsersDAO dao = UsersDAO.getInstance();
+                UsersDTO user = dao.checkLogin(email, password);
+                if (user != null) {
+                    HttpSession session = request.getSession();
+                    session.setAttribute("USER_INFO", user);
+                    url = HOME_PAGE;
+                } else {
+                    msg = "User is not found";
+                }
+            } else {
+                msg = "Email and password cannot be empty";
+            }
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
+            if (msg != null) {
+                request.setAttribute("ERR_MSG", msg);
+            }
+            request.getRequestDispatcher(url).forward(request, response);
             out.close();
         }
     }

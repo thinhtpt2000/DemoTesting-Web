@@ -21,6 +21,16 @@
             <version>7.0</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>mssql-jdbc</artifactId>
+            <version>8.4.1.jre8</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -79,7 +89,7 @@
                     <server>tomcat9</server>
                     <update>true</update>
                     <url>http://localhost:6969/manager/text</url>
-<!--                    <server>Apache Tomcat or TomEE</server>
+                    <!--                    <server>Apache Tomcat or TomEE</server>
                     <username>sa</username>
                     <password>thinhtpt</password>
                     <url>http://localhost:6969/manager/text</url>-->
