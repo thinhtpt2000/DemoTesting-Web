@@ -12,7 +12,7 @@
         <title>Home Page</title>
     </head>
     <body>
-        <h1>Home Page</h1>
+        <h1>Welcome Page</h1>
         <h3 id="welcome-msg">
             Hi, ${sessionScope.USER_INFO.fullName}!
         </h3>
