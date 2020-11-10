@@ -14,7 +14,7 @@
     <body>
         <h1>Welcome Page</h1>
         <h3 id="welcome-msg">
-            Hi, ${sessionScope.USER_INFO.fullName}!
+            Welcome, ${sessionScope.USER_INFO.fullName}!
         </h3>
     </body>
 </html>
