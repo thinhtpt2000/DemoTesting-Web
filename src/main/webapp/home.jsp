@@ -24,7 +24,7 @@
         <div class="container">
             <div class="row my-4 mx-auto col-sm-6">
                 <h3 id="welcome-msg" class="text-success col-sm-6 mx-auto">
-                    Ahihi, ${sessionScope.USER_INFO.fullName}!
+                    Hi, ${sessionScope.USER_INFO.fullName}!
                 </h3>
                 <div class="col-sm-3 mx-auto">
                     <a class="btn btn-warning" href="signOut">Sign Out</a>
